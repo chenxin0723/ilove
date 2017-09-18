@@ -38,5 +38,5 @@ func Home(ctx *gin.Context) {
 }
 
 func isDraft(r *http.Request) bool {
-	return !strings.Contains(r.Host, "draft-")
+	return strings.Contains(r.Host, "draft")
 }
