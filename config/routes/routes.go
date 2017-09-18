@@ -10,8 +10,8 @@ import (
 	"github.com/chenxin0723/ilove/app/controllers"
 	"github.com/chenxin0723/ilove/config"
 	"github.com/chenxin0723/ilove/config/admin"
+	"github.com/chenxin0723/ilove/config/db"
 	"github.com/gin-gonic/gin"
-	"github.com/qor/qor-example/db"
 	"github.com/qor/wildcard_router"
 	"github.com/theplant/appkit/log"
 	"github.com/theplant/appkit/server"
@@ -29,15 +29,15 @@ func Mux(l log.Logger) (http.Handler, error) {
 
 	mux := http.NewServeMux()
 	router := engine.Group("", controllers.SetContext)
-	router.GET("", controllers.Home)
+	router.GET("/", controllers.Home)
 
 	publicDir := http.Dir(strings.Join([]string{config.Root, "public"}, "/"))
 	var fs = http.FileServer(publicDir)
 	mux.Handle("/system/", fs)
 
 	WildcardRouter.MountTo("/", mux)
-	// Note: MicroSite has to be on top of other handlers, otherwise microsites can't be found
-	// WildcardRouter.AddHandler(models.MicroSite)
+	admin.Admin.MountTo("/admin", mux)
+	WildcardRouter.AddHandler(engine)
 
 	ab := admin_auth.Start(l, db.DB, admin.Admin, []string{})
 	ab.AuthLoginOKPath = "/"

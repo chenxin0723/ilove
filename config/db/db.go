@@ -37,7 +37,7 @@ func init() {
 		media.RegisterCallbacks(DB)
 		// migrateDB(DB)
 	} else {
-		fmt.Println("can't link to db")
+		fmt.Println("can't link to db ---", err)
 	}
 }
 

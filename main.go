@@ -31,7 +31,7 @@ func main() {
 		return
 	}
 
-	port := fmt.Sprintf(":%d", config.Config.Port)
+	port := fmt.Sprintf(":%s", config.Config.Port)
 	fmt.Println("listen on", port)
 
 	err := http.ListenAndServe(port, middleware(handler))

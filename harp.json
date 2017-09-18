@@ -1,0 +1,57 @@
+{
+    "goos": "linux",
+    "goarch": "amd64",
+    "app": {
+        "name": "ilove",
+        "importpath": "github.com/chenxin0723/ilove",
+        "DeployScript": "scripts/harp_deploy.sh",
+        "RestartScript": "scripts/harp_restart.sh",
+        "envs": {},
+        "BuildArgs": "-tags bindatafs",
+        "DefaultExcludeds": [
+            ".git/",
+            ".scss",
+            "tmp/",
+            "todo/",
+            "vendor/",
+            ".DS_Store",
+            "node_modules/",
+            "*.swp",
+            "*.go",
+            "public/system",
+            "*.md",
+            "*.bz2",
+            "qor-example/",
+            "config/bindatafs/templates/",
+            "config/admin/bindatafs/templates/",
+            "test/asics3_test.log"
+        ],
+        "files": [
+            {
+                "path": "github.com/chenxin0723/ilove"
+            },
+            {
+                "path": "github.com/chenxin0723/ilove/public/system",
+                "Delete": true
+            }
+        ]
+    },
+    "servers": {
+        "dev": [
+            {
+                "gopath": "/root/work",
+                "user": "ilove_app",
+                "host": "139.196.103.204",
+                "port": ":22"
+            }
+        ],
+        "dev_draft": [
+            {
+                "gopath": "/root/work",
+                "user": "root",
+                "host": "139.196.103.204",
+                "port": ":22"
+            }
+        ]
+    }
+}
