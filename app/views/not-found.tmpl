@@ -1,0 +1,16 @@
+<main class="asics-404">
+    <div class="bg-container" style="background-image: url(/system/images/scenic-dk.jpg);">
+        <div class="wrapper">
+            <div class="server-error">
+                <h3>{{ T "ap.not-found.404: Page Not Found" }}</h3>
+                <h2>{{ T "ap.not-found.IT LOOKS LIKE THIS<br>PAGE IS LOST." }}</h2>
+                <p>{{ T "ap.not-found.This is embarrassing but we can't seem to find the page you're looking for. Either the page doesn't exist or an error occurred. Try refreshing your browser or going back to the previous page." }}</p>
+
+                <form class="form-search" method="get" action="{{URLPrefix}}/search" id="form-search">
+                    <input class="input-search" type="text" name="text" placeholder="{{ T "ap.not-found.Search Gear & Clothing" }}" autocomplete="off">
+                    <input class="form-search-submit" type="submit" value="Submit" tabindex="0">
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
