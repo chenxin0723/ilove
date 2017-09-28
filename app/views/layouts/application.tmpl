@@ -4,7 +4,6 @@
       <meta charset="utf-8">
       <title>Xian & Xin home</title>
 
-      <link rel="shortcut icon" type="image/x-icon" media="all" href="/system/favicon.ico">
       <meta http-equiv="x-ua-compatible" content="IE=Edge; IE=10; IE=9;">
       <meta content="true" name="HandheldFriendly">
       <meta content="yes" name="apple-mobile-web-app-capable">
@@ -12,10 +11,48 @@
       <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0" />
       <link rel="icon" type="image/png" sizes="160x160.png" href="/system/xin.png">
 
+      <script src="/system/js/jquery.min.js"></script>
   </head>
-
-  <body class="222 {{if .ActionBar}}qor-action-bar-exist{{end}}">
+  <body class="{{if .ActionBar}}qor-action-bar-exist{{end}} ">
       {{ .ActionBar }}
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- logo begin -->
+                        <div id="logo">
+                            <a href="index.html">
+                                <h2>{{T "xian"}}<span>&amp;</span>{{T "xin"}}</h2>
+                            </a>
+                        </div>
+                        <!-- logo close -->
+
+                        <!-- small button begin -->
+                        <span id="menu-btn"></span>
+                        <!-- small button close -->
+                        <!-- mainmenu begin -->
+                        <nav>
+                            <ul id="mainmenu">
+                                <li><a href="#" >{{T "Home"}}</a><span></span>
+                                    <ul>
+                                        <!-- <li><a href="index.html" class="animsition-link">Wedding 1</a></li>                    -->
+                                    </ul>
+                                </li>
+                                <li><a href="#story" >{{T "Our Story"}}</a></li>
+                                <li><a href="#">{{T "Heart's Dsire"}}</a></li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                    <!-- mainmenu close -->
+
+                </div>
+            </div>
+        </header>
+
+
       {{ yield }}
+
+
   </body>
 </html>

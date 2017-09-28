@@ -34,6 +34,8 @@ func Mux(l log.Logger) (http.Handler, error) {
 	publicDir := http.Dir(strings.Join([]string{config.Root, "public"}, "/"))
 	var fs = http.FileServer(publicDir)
 	mux.Handle("/system/", fs)
+	mux.Handle("/media-libraries/", fs)
+	mux.Handle("/system2/", fs)
 
 	WildcardRouter.MountTo("/", mux)
 	admin.Admin.MountTo("/admin", mux)
@@ -45,44 +47,37 @@ func Mux(l log.Logger) (http.Handler, error) {
 
 	middleware := server.Compose(
 		// WithWidgetContext(),
-		WithRenderActionBar())
+		WithRenderActionBar(),
+		DraftMiddleWare(),
+	)
 
 	return middleware(mux), nil
+}
+func DraftMiddleWare() func(http.Handler) http.Handler {
+	return func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if !config.IsDraft() {
+				if strings.HasPrefix(r.RequestURI, "/auth/") || strings.HasPrefix(r.RequestURI, "/admin") {
+					http.NotFound(w, r)
+					return
+				}
+			}
+			h.ServeHTTP(w, r)
+		})
+	}
 }
 
 func WithRenderActionBar() func(http.Handler) http.Handler {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			var actionBar template.HTML
-			var req_ctx = r
-			if is_prod_site := r.Header.Get("x-cms-production"); is_prod_site == "" {
-				qorAdminCssJs := template.HTML(`<script type="text/javascript" src="/cms/qor_vendor.js"></script><link rel="stylesheet" href="/cms/qor_admin.css"><script defer async type="text/javascript" src="/cms/qor_admin.js"></script>`)
-				actionBar = qorAdminCssJs + admin.ActionBar.Render(w, r)
-				req_ctx = r.WithContext(context.WithValue(r.Context(), "DraftSite", true))
-			}
-			newCtx := req_ctx.WithContext(context.WithValue(req_ctx.Context(), "ActionBar", actionBar))
+			qorAdminCssJs := template.HTML(`<script type="text/javascript" src="/cms/qor_vendor.js"></script><link rel="stylesheet" href="/cms/qor_admin.css"><script defer async type="text/javascript" src="/cms/qor_admin.js"></script>`)
+			actionBar = qorAdminCssJs + admin.ActionBar.Render(w, r)
+			newCtx := r.WithContext(context.WithValue(r.Context(), "ActionBar", actionBar))
 			h.ServeHTTP(w, newCtx)
 		})
 	}
 }
-
-// func WithWidgetContext() func(http.Handler) http.Handler {
-// 	return func(h http.Handler) http.Handler {
-// 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-// 			options := map[string]interface{}{}
-// 			options["Request"] = r
-
-// 			widgetContext := admin.Widgets.NewContext(&widget.Context{
-// 				DB:         config.DB,
-// 				InlineEdit: InlineEdit(w, r, admin.ActionBar.EditMode(w, r)),
-// 				Options:    options,
-// 			})
-
-// 			newCtx := context.WithValue(r.Context(), "WidgetContext", widgetContext)
-// 			h.ServeHTTP(w, r.WithContext(newCtx))
-// 		})
-// 	}
-// }
 
 func InlineEdit(w http.ResponseWriter, req *http.Request, actionBarEditMode bool) (inline_edit bool) {
 	if !actionBarEditMode {

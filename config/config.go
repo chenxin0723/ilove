@@ -1,8 +1,10 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"path"
+	"strings"
 
 	"github.com/jinzhu/configor"
 	"github.com/theplant/appkit/log"
@@ -12,6 +14,8 @@ var (
 	Logger = log.Default()
 	Root   string
 )
+
+var ENV = ""
 
 var Config = struct {
 	Port string
@@ -30,9 +34,20 @@ func init() {
 
 	os.Setenv("CONFIGOR_ENV_PREFIX", "ILOVE")
 
+	ENV = configor.ENV()
+	fmt.Printf("ENV: %s\n", ENV)
+
 	if err := configor.Load(&Config); err != nil {
 		panic(err)
 	}
 
 	return
+}
+
+func IsDraft() bool {
+	return strings.HasSuffix(ENV, "draft") || ENV == "development"
+}
+
+func IsProd() bool {
+	return ENV == "prod"
 }

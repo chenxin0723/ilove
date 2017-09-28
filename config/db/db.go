@@ -4,10 +4,12 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/chenxin0723/ilove/app/models"
 	"github.com/chenxin0723/ilove/config"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"github.com/qor/i18n"
+	"github.com/qor/i18n/backends/database"
 	"github.com/qor/media"
 	"github.com/qor/publish2"
 )
@@ -35,13 +37,27 @@ func init() {
 		VisibleModeOffDB = db.Set(publish2.VisibleMode, publish2.ModeOff)
 		publish2.RegisterCallbacks(DB)
 		media.RegisterCallbacks(DB)
-		// migrateDB(DB)
+		I18n = i18n.New(database.New(DB))
+		migrateDB(DB)
 	} else {
 		fmt.Println("can't link to db ---", err)
 	}
 }
 
-// func migrateDB(db *gorm.DB) (err error) {
-// 	db.AutoMigrate(&models.QorWidgetSetting{}, &media_library.MediaLibrary{}, &banner_editor.QorBannerEditorSetting{}, &models.PageBuilder{})
-// 	return nil
-// }
+func migrateDB(db *gorm.DB) (err error) {
+	db.AutoMigrate(&models.MediaLibrary{}, &models.PageSetting{}, &models.QorWidgetSetting{})
+
+	common_widgets := []string{"CommonTest"}
+	for _, widget_name := range common_widgets {
+		var widget models.QorWidgetSetting
+		if db.Where("name = ?", widget_name).Find(&widget).RecordNotFound() {
+			widget.Name = widget_name
+			widget.WidgetType = widget_name
+			widget.GroupName = widget_name
+			widget.Kind = widget_name
+			widget.Shared = true
+			db.Create(&widget)
+		}
+	}
+	return nil
+}

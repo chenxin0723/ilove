@@ -37,7 +37,7 @@
         ]
     },
     "servers": {
-        "dev": [
+        "prod": [
             {
                 "gopath": "/root/work",
                 "user": "ilove_app",
@@ -45,10 +45,10 @@
                 "port": ":22"
             }
         ],
-        "dev_draft": [
+        "draft": [
             {
                 "gopath": "/root/work",
-                "user": "root",
+                "user": "ilove_app_draft",
                 "host": "139.196.103.204",
                 "port": ":22"
             }
