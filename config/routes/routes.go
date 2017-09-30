@@ -56,6 +56,15 @@ func Mux(l log.Logger) (http.Handler, error) {
 func DraftMiddleWare() func(http.Handler) http.Handler {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if config.IsDraft() && !strings.HasPrefix(r.RequestURI, "/auth/") {
+				context := admin.Admin.NewContext(w, r)
+				if auth := context.Admin.Auth; auth != nil {
+					if auth.GetCurrentUser(context) == nil {
+						http.Redirect(w, r, "/auth/login", http.StatusMovedPermanently)
+					}
+				}
+			}
+
 			if !config.IsDraft() {
 				if strings.HasPrefix(r.RequestURI, "/auth/") || strings.HasPrefix(r.RequestURI, "/admin") {
 					http.NotFound(w, r)

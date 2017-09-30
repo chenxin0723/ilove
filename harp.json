@@ -12,31 +12,11 @@
             ".git/",
             ".scss",
             "tmp/",
-            "todo/",
-            "vendor/",
-            ".DS_Store",
-            "node_modules/",
-            "*.swp",
-            "*.go",
-            "public/system",
-             "public/system2",
-            "*.md",
-            "*.bz2",
-            "qor-example/",
-            "config/bindatafs/templates/",
-            "config/admin/bindatafs/templates/",
-            "test/asics3_test.log"
+            "public/system/media_libraries",
         ],
         "files": [
             {
                 "path": "github.com/chenxin0723/ilove"
-            },
-            {
-                "path": "github.com/chenxin0723/ilove/public/system",
-                "Delete": true
-            },{
-                "path": "github.com/chenxin0723/ilove/public/system2",
-                "Delete": true
             }
         ]
     },

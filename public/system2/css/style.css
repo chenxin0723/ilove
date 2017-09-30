@@ -382,6 +382,7 @@
 /* Polaroids Gallery */
 
 ul.polaroids p {
+    font-family: fantasy;
     text-align: center;
     color: #696767;
     line-height: 24px;
@@ -393,7 +394,7 @@ ul.polaroids span {
     display: inline-block;
     margin-top: 40px;
     font-weight: 700;
-    font-family: Montserrat;
+    font-family: "Mr De Haviland";
 }
 ul.polaroids li {
     text-align: center;
