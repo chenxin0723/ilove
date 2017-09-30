@@ -11,6 +11,7 @@ import (
 	"github.com/qor/i18n"
 	"github.com/qor/i18n/backends/database"
 	"github.com/qor/media"
+	"github.com/qor/media_library"
 	"github.com/qor/publish2"
 )
 
@@ -45,7 +46,7 @@ func init() {
 }
 
 func migrateDB(db *gorm.DB) (err error) {
-	db.AutoMigrate(&models.MediaLibrary{}, &models.PageSetting{}, &models.QorWidgetSetting{})
+	db.AutoMigrate(&media_library.MediaLibrary{}, &models.PageSetting{}, &models.QorWidgetSetting{}, &models.StorySection{})
 
 	common_widgets := []string{"CommonTest"}
 	for _, widget_name := range common_widgets {

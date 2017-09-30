@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="/system/css/color.css" type="text/css" id="colors">
 
     <style type="text/css">
+        .qor-widget-button {
+            z-index: 20
+        }
         #time{
             text-align: center;
              font-family: "Mr De Haviland";
@@ -69,18 +72,21 @@
            pointer-events: none;
            cursor: default;
         }
+        .img-circle {
+            width: 300px !important;
+        }
     </style>
-      <audio src="/system/ilove.mp3" autoplay hidden loop>
+      <audio src="{{$page_setting.TopBackGroundMusicUrl}}" autoplay hidden loop>
       </audio>
         <!-- content begin -->
     <!-- section begin -->
-    <section id="section-hero-1" class="relative z1 owl-slide-wrapper text-light" data-stellar-background-ratio=".2">
-        <div class="center-y fadeScroll relative {{if inlineEdit}} microsite_setting" data-setting-url="/admin/page_settings?microsite_setting_id=Social" {{else}}"{{end}} data-scroll-speed="4">
+    <section id="section-hero-1" class="relative z1 owl-slide-wrapper text-light" data-stellar-background-ratio=".2" style="background: url({{$page_setting.TopBackGroundImageUrl}});">
+        <div class="center-y fadeScroll relative {{if inlineEdit}} microsite_setting" data-setting-url="/admin/page_settings?microsite_setting_id=TopBackGround" {{else}}"{{end}} data-scroll-speed="4">
             <div class="container">
                 <div class="row">
                     <div class="spacer-double"></div>
-                    <div class="col-md-4 col-md-offset-4">
-                        <img src="/system/xin.png" class="img-circle" alt="">
+                    <div class="col-md-4 col-md-offset-4 {{if inlineEdit}} microsite_setting" data-setting-url="/admin/page_settings?microsite_setting_id=OurBackGround" {{else}}"{{end}} >
+                        <img src="{{$page_setting.OurBackGroundImageUrl}}" class="img-circle" alt="">
                     </div>
 
    <!--                  <div class="col-md-8 col-md-offset-2">
@@ -108,7 +114,7 @@
     <!-- section close -->
 
     <!-- section begin -->
-    <section id="section-quote" aria-label="section-quote-1" class="text-light" data-stellar-background-ratio=".2" data-bgcolor="#f8578d">
+    <section id="section-quote" aria-label="section-quote-1" class="text-light {{if inlineEdit}} microsite_setting" data-setting-url="/admin/page_settings?microsite_setting_id=TimeBackGroundImage" {{else}}"{{end}} data-stellar-background-ratio=".2" data-bgcolor="#f8578d" style="background: url({{$page_setting.TimeBackGroundImageUrl}});">
         <div class="container">
             <div class="row wow fadeInUp">
                 <div class="col-md-8 col-md-offset-2">
@@ -144,7 +150,7 @@
 
 <!-- /ornament4 -->
 <!-- section:story -->
-<section id="story">
+<section id="story" class="{{if inlineEdit}} microsite_setting" data-setting-url="/admin/page_settings?microsite_setting_id=StoryBackGroundImage" {{else}}"{{end}} style="background: url({{$page_setting.StoryBackGroundImageUrl}});">
  <div class="container">
     <div class="section-heading">
        <h2>{{T "Our Story"}}</h2>
@@ -153,27 +159,21 @@
     </div>
     <!-- /section-heading -->
     <!-- Polaroids -->
-    <div class="row">
-       <ul id="story-carousel" class="polaroids owl-carousel margin1">
+    <div class="row {{if inlineEdit}} microsite_setting" style="position: relative;" data-setting-url="/admin/page_settings?microsite_setting_id=StorySections&microsite_setting_group=OurStory" {{else}}"{{end}}>
+       <ul id="story-carousel" class="polaroids owl-carousel margin">
+
           <!-- image1 -->
+          {{range $index, $storysection := $page_setting.StorySections }}
           <li class="polaroid-item"
              data-0="transform:translatey(0%);"
              data-center="transform:translatey(0%);transform:rotate(-4deg)" >
              <div  data-gal="prettyPhoto[gallery]">
-                <img alt="" src="/system2/img/polaroid1.jpg" class="img-responsive"/>
-                <span>2010</span>
-                <p>Our first trip together after dating for 3 Months</p>
+                <img alt="" src="{{$storysection.OurStoryImageUrl}}" class="img-responsive"/>
+                <span>{{$storysection.OurStoryDate}}</span>
+                <p>{{$storysection.OurStoryDescription}} </p>
              </div>
           </li>
-          <!-- image2 -->
-          <li class="polaroid-item" data-0="transform:translatey(-0%);"
-             data-center="transform:translatey(0%);transform:rotate(8deg)">
-             <div data-gal="prettyPhoto[gallery]">
-                <img alt="" src="/system2/img/polaroid2.jpg" class="img-responsive"/>
-                <span>2012</span>
-                <p>Moving Together...</p>
-             </div>
-          </li>
+         {{end}}
           <!-- /li polaroid -->
        </ul>
        <!-- /ul-polaroids -->

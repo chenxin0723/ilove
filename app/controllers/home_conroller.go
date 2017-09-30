@@ -44,7 +44,8 @@ func SetContext(ctx *gin.Context) {
 
 	funcMap["get_setting"] = func() interface{} {
 		var page_setting models.PageSetting
-		db.DB.First(&page_setting)
+		db.DB.Preload("StorySections").Last(&page_setting)
+		fmt.Println("###################", page_setting.StorySections)
 		return page_setting
 	}
 	funcMap["inlineEdit"] = func() bool {
@@ -59,7 +60,6 @@ func SetContext(ctx *gin.Context) {
 	})
 
 	funcMap["CommonTest"] = func() template.HTML {
-		fmt.Println("#################", widgetContext.Render("CommonTest", "CommonTest"))
 		return widgetContext.Render("CommonTest", "CommonTest")
 	}
 
@@ -73,6 +73,8 @@ func Home(ctx *gin.Context) {
 	if config.IsDraft() {
 		qorAdminCssJs := template.HTML(`<script type="text/javascript" src="/system/qor_vendor.js"></script><link rel="stylesheet" href="/system/qor_admin.css"><script defer async type="text/javascript" src="/system/qor_admin.js"></script>`)
 		viewCtx["ActionBar"] = qorAdminCssJs + admin.ActionBar.Render(ctx.Writer, ctx.Request)
+	} else {
+		viewCtx["ActionBar"] = ""
 	}
 
 	viewCtx["PageType"] = "Homepage"

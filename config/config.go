@@ -15,10 +15,9 @@ var (
 	Root   string
 )
 
-var ENV = ""
-
 var Config = struct {
 	Port string
+	Env  string
 	DB   struct {
 		Name     string `default:"ilove"`
 		Host     string `default:"localhost"`
@@ -34,20 +33,17 @@ func init() {
 
 	os.Setenv("CONFIGOR_ENV_PREFIX", "ILOVE")
 
-	ENV = configor.ENV()
-	fmt.Printf("ENV: %s\n", ENV)
-
 	if err := configor.Load(&Config); err != nil {
 		panic(err)
 	}
-
+	fmt.Printf("Config: ------------%s\n", Config)
 	return
 }
 
 func IsDraft() bool {
-	return strings.HasSuffix(ENV, "draft") || ENV == "development"
+	return strings.HasSuffix(Config.Env, "draft") || Config.Env == "development"
 }
 
 func IsProd() bool {
-	return ENV == "prod"
+	return Config.Env == "prod"
 }

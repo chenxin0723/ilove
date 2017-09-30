@@ -33,7 +33,6 @@ func main() {
 
 	port := fmt.Sprintf(":%s", config.Config.Port)
 	fmt.Println("listen on", port)
-
 	err := http.ListenAndServe(port, middleware(handler))
 	if err != nil {
 		panic(err)

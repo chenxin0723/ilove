@@ -1,7 +1,7 @@
-]/* 
-/* 
+]/*
+/*
 	Section Background (bg.css)
-	
+
 	Table of Content
 	- general settings for section & subheader
 	- background settings for page subheader
@@ -31,8 +31,8 @@ background-size: 100% !important;
 
 
 /* background settings for section */
-#section-hero-1 {background:url(../images/background/6.jpg);}
-#section-hero-2 {background:url(../images_02/background/3.jpg);}
+/*#section-hero-1 {background:url(../images/background/6.jpg);}*/
+/*#section-hero-2 {background:url(../images_02/background/3.jpg);}
 #section-hero-3 {background:url(../images_02/background/4.jpg);}
 #section-quote {background:url(../images/background/4.jpg);}
 #section-countdown {background:url(../images/background/6.jpg);}
@@ -40,7 +40,7 @@ background-size: 100% !important;
 #section-bride {background:url(../images/background/2.jpg) top;}
 #section-groom {background:url(../images/background/1.jpg) top;}
 #section-event-1 {background:url(../images/background/7.jpg);}
-
+*/
 /* 02 */
 
 #section-package {background:url(../images_02/background/1.jpg);}

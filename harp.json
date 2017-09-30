@@ -19,6 +19,7 @@
             "*.swp",
             "*.go",
             "public/system",
+             "public/system2",
             "*.md",
             "*.bz2",
             "qor-example/",
@@ -32,6 +33,9 @@
             },
             {
                 "path": "github.com/chenxin0723/ilove/public/system",
+                "Delete": true
+            },{
+                "path": "github.com/chenxin0723/ilove/public/system2",
                 "Delete": true
             }
         ]
@@ -48,7 +52,7 @@
         "draft": [
             {
                 "gopath": "/root/work",
-                "user": "ilove_app_draft",
+                "user": "root",
                 "host": "139.196.103.204",
                 "port": ":22"
             }
