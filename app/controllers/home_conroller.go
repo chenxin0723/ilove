@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"html/template"
 	"time"
 
@@ -37,7 +36,7 @@ func SetContext(ctx *gin.Context) {
 		localeI18n := db.I18n.Fallbacks("en-us").(*i18n.I18n)
 		var inlineEdit bool
 		if config.IsDraft() {
-			inlineEdit = true
+			inlineEdit = admin.ActionBar.EditMode(ctx.Writer, ctx.Request)
 		}
 		return inline_edit.InlineEdit(localeI18n, "en-us", inlineEdit)(key, args...)
 	}
@@ -45,7 +44,6 @@ func SetContext(ctx *gin.Context) {
 	funcMap["get_setting"] = func() interface{} {
 		var page_setting models.PageSetting
 		db.DB.Preload("StorySections").Last(&page_setting)
-		fmt.Println("###################", page_setting.StorySections)
 		return page_setting
 	}
 	funcMap["inlineEdit"] = func() bool {
